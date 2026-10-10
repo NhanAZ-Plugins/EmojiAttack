@@ -16,8 +16,18 @@ if ($serverSource === null || !is_file($serverSource . '/vendor/autoload.php')) 
 	throw new RuntimeException('Pass the path to an installed Axolotl-PM source checkout');
 }
 require $serverSource . '/vendor/autoload.php';
-require_once __DIR__ . '/../src/NhanAZ/EmojiAttack/🐞.php';
-require_once __DIR__ . '/../src/NhanAZ/EmojiAttack/Main.php';
+$artifact = $argv[2] ?? null;
+if ($artifact === null) {
+	$source = __DIR__ . '/../src/NhanAZ/EmojiAttack/';
+} else {
+	$resolved = realpath($artifact);
+	if ($resolved === false) {
+		throw new RuntimeException('The plugin PHAR does not exist');
+	}
+	$source = 'phar://' . str_replace('\\', '/', $resolved) . '/src/NhanAZ/EmojiAttack/';
+}
+require_once $source . '🐞.php';
+require_once $source . 'Main.php';
 
 $plugin = (new ReflectionClass(Main::class))->newInstanceWithoutConstructor();
 if (!$plugin instanceof 🐞) {

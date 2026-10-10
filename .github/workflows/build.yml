@@ -1,0 +1,60 @@
+name: Build and validate EmojiAttack plugin
+
+on:
+  push:
+    branches: [master]
+    tags: ["v*"]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test packet changes on Axolotl-PM ${{ matrix.version }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - version: "5.0.0"
+            ref: b16cc69974d4e805d21e6328ab77c0e17cd7116d
+          - version: "5.49.1"
+            ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
+    steps:
+      - name: Check out EmojiAttack source
+        uses: actions/checkout@v7.0.1
+      - name: Check out pinned Axolotl-PM source
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: axolotl-pm/PocketMine-MP
+          ref: ${{ matrix.ref }}
+          path: .test-dependencies/axolotl-pm
+          persist-credentials: false
+      - name: Check out Axolotl-PM PHP setup helper
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: axolotl-pm/setup-php-action
+          ref: b8c3f9add4f2ad4a5e2624a1112aba899ee8db0e
+          path: .test-dependencies/setup-php-action
+          persist-credentials: false
+      - name: Set up Axolotl-PM PHP environment
+        shell: bash
+        env:
+          INPUT_PHP-VERSION: "8.1"
+          INPUT_PM-VERSION-MAJOR: "5"
+          INPUT_INSTALL-PATH: ./.php-bin
+        run: node "$GITHUB_WORKSPACE/.test-dependencies/setup-php-action/dist/index.js"
+      - name: Install pinned Axolotl-PM dependencies
+        run: composer install --working-dir=.test-dependencies/axolotl-pm --no-interaction --prefer-dist --no-progress --no-scripts --no-plugins
+      - name: Test text and command packet transformations
+        run: php tests/packet-transform.php .test-dependencies/axolotl-pm
+
+  build:
+    needs: test
+    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@6606444fc32787a3e50275fdb668c2310e899740
+    with:
+      axolotl-ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
+      phpstan: max

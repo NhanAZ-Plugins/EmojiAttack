@@ -11,6 +11,7 @@ use pocketmine\plugin\PluginBase as 🏠;
 use pocketmine\event\server\DataPacketSendEvent as 🛳️;
 use pocketmine\network\mcpe\protocol\TextPacket as 💬;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket as 📦;
+use pocketmine\network\mcpe\protocol\types\command\raw\CommandRawData as 📋;
 use function array_rand as 🎰;
 use function preg_replace as 🔁;
 
@@ -31,23 +32,68 @@ class 🐞 extends 🏠 implements 👂 {
 	}
 
 	private function 🚰(): string {
-		$🏪 = $this->🛒->getAll(✔️);
+		$🏪 = [];
+		foreach ($this->🛒->getAll(✔️) as $emoji) {
+			if (is_string($emoji) && $emoji !== "") {
+				$🏪[] = $emoji;
+			}
+		}
+		if ($🏪 === []) {
+			return "";
+		}
 		return " " . $🏪[🎰($🏪)] . self::✈️;
+	}
+
+	private function 🎨(): string {
+		if ($this->getConfig()->get("randomColor") !== ✔️) {
+			return "";
+		}
+		$colors = $this->getConfig()->get("arrColor", ["§e", "§a", "§d", "§c", "§b"]);
+		if (!is_array($colors)) {
+			return "";
+		}
+		$valid = [];
+		foreach ($colors as $color) {
+			if (is_string($color) && $color !== "") {
+				$valid[] = $color;
+			}
+		}
+		return $valid === [] ? "" : $valid[🎰($valid)];
+	}
+
+	private function suffix(): string {
+		$emoji = $this->🚰();
+		return $emoji === "" ? "" : $this->🎨() . $emoji;
 	}
 
 	public function 🤔(string $📃): string {
 		$🔥 = "/%*(([a-z0-9_]+\.)+[a-z0-9_]+)/i";
 		$💧 = "%$1";
-		if ($this->getConfig()->get("randomColor")) {
-			$🏳️‍🌈 = $this->getConfig()->get("arrColor", ["§e", "§a", "§d", "§c", "§b"]);
-			return 🔁($🔥, $💧, $📃) .  $🏳️‍🌈[🎰($🏳️‍🌈)] . $this->🚰();
-		} else {
-			return 🔁($🔥, $💧, $📃) . $this->🚰();
+		return (🔁($🔥, $💧, $📃) ?? $📃) . $this->suffix();
+	}
+
+	private function decorateCommand(📦 $packet, int $index, object $command): void {
+		if ($command instanceof 📋) {
+			array_splice($packet->commandData, $index, 1, [new 📋(
+				$command->getName(),
+				$this->🤔($command->getDescription()),
+				$command->getFlags(),
+				$command->getPermission(),
+				$command->getAliasEnumIndex(),
+				$command->getChainedSubCommandDataIndexes(),
+				$command->getOverloads()
+			)]);
+			return;
+		}
+		$publicFields = get_object_vars($command);
+		$description = $publicFields['description'] ?? null;
+		if (is_string($description)) {
+			(new \ReflectionProperty($command, 'description'))->setValue($command, $this->🤔($description));
 		}
 	}
 
 	public function 🚀(🛳️ $🎉): void {
-		foreach ($🎉->getPackets() as $➖ => $✨) {
+		foreach ($🎉->getPackets() as $✨) {
 			if ($✨ instanceof 💬) {
 				switch ($✨->type) {
 					case 💬::TYPE_POPUP:
@@ -58,17 +104,12 @@ class 🐞 extends 🏠 implements 👂 {
 						$✨->message = $this->🤔($✨->message);
 						break;
 					default:
-						if ($this->getConfig()->get("randomColor")) {
-							$🏳️‍🌈 = $this->getConfig()->get("arrColor", ["§e", "§a", "§d", "§c", "§b"]);
-							$✨->message .= $🏳️‍🌈[🎰($🏳️‍🌈)] . $this->🚰();
-						} else {
-							$✨->message .= $this->🚰();
-						}
+						$✨->message .= $this->suffix();
 						break;
 				}
 			} elseif ($✨ instanceof 📦) {
 				foreach ($✨->commandData as $📛 => $📅) {
-					$📅->description = $this->🤔($📅->description);
+					$this->decorateCommand($✨, $📛, $📅);
 				}
 			}
 		}

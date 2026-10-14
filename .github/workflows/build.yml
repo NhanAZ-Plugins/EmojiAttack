@@ -25,28 +25,20 @@ jobs:
             ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
     steps:
       - name: Check out EmojiAttack source
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Check out pinned Axolotl-PM source
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: axolotl-pm/PocketMine-MP
           ref: ${{ matrix.ref }}
           path: .test-dependencies/axolotl-pm
           persist-credentials: false
-      - name: Check out Axolotl-PM PHP setup helper
-        uses: actions/checkout@v7.0.1
-        with:
-          repository: axolotl-pm/setup-php-action
-          ref: b8c3f9add4f2ad4a5e2624a1112aba899ee8db0e
-          path: .test-dependencies/setup-php-action
-          persist-credentials: false
       - name: Set up Axolotl-PM PHP environment
-        shell: bash
-        env:
-          INPUT_PHP-VERSION: "8.1"
-          INPUT_PM-VERSION-MAJOR: "5"
-          INPUT_INSTALL-PATH: ./.php-bin
-        run: node "$GITHUB_WORKSPACE/.test-dependencies/setup-php-action/dist/index.js"
+        uses: axolotl-pm/setup-php-action@b8c3f9add4f2ad4a5e2624a1112aba899ee8db0e
+        with:
+          php-version: "8.1"
+          pm-version-major: "5"
+          install-path: ./.php-bin
       - name: Install pinned Axolotl-PM dependencies
         run: composer install --working-dir=.test-dependencies/axolotl-pm --no-interaction --prefer-dist --no-progress --no-scripts --no-plugins
       - name: Test text and command packet transformations
@@ -54,7 +46,7 @@ jobs:
 
   build:
     needs: test
-    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@6606444fc32787a3e50275fdb668c2310e899740
+    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@8d13a75aaf4f330fdbd93737d58be9cacc41e262 # v1.0.15
     with:
       axolotl-ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
       phpstan: max

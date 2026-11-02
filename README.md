@@ -17,7 +17,7 @@ The plugin changes outgoing packet text. Other plugins or server features that s
 
 ## Requirements and compatibility
 
-The manifest requires Axolotl-PM API `5.0.0`. The server requires PHP 8.1 or newer. Packet transformations and PHPStan analysis were checked against the API 5.0.0 and 5.49.1 source revisions. A [pinned workflow](.github/workflows/build.yml) records the exact revisions used in CI. These two checks do not establish compatibility with every Axolotl-PM 5.x release.
+The manifest requires Axolotl-PM API `5.0.0`. The server requires PHP 8.1 or newer. Packet transformations and PHPStan analysis were checked against the API 5.0.0 and 5.51.1 source revisions. A [pinned workflow](.github/workflows/build.yml) records the exact revisions used in CI. These two checks do not establish compatibility with every Axolotl-PM 5.x release.
 
 EmojiAttack has no runtime virion dependencies.
 

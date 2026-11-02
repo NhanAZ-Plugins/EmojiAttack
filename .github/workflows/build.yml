@@ -21,8 +21,8 @@ jobs:
         include:
           - version: "5.0.0"
             ref: b16cc69974d4e805d21e6328ab77c0e17cd7116d
-          - version: "5.49.1"
-            ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
+          - version: "5.51.1"
+            ref: e881fc1bc1c401545baf6bd1f824e41ff3f57bd1
     steps:
       - name: Check out EmojiAttack source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -46,7 +46,7 @@ jobs:
 
   build:
     needs: test
-    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@8d13a75aaf4f330fdbd93737d58be9cacc41e262 # v1.0.15
+    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@v2 # v2
     with:
-      axolotl-ref: dfe0d07e48a9e8d5a4a242fa43ff1cd3b743a955
+      axolotl-ref: e881fc1bc1c401545baf6bd1f824e41ff3f57bd1
       phpstan: max

@@ -11,6 +11,7 @@ use pocketmine\plugin\PluginBase as 🏠;
 use pocketmine\event\server\DataPacketSendEvent as 🛳️;
 use pocketmine\network\mcpe\protocol\TextPacket as 💬;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket as 📦;
+use pocketmine\network\mcpe\protocol\types\command\CommandData as 🗂️;
 use pocketmine\network\mcpe\protocol\types\command\raw\CommandRawData as 📋;
 use function array_rand as 🎰;
 use function preg_replace as 🔁;
@@ -85,10 +86,8 @@ class 🐞 extends 🏠 implements 👂 {
 			)]);
 			return;
 		}
-		$publicFields = get_object_vars($command);
-		$description = $publicFields['description'] ?? null;
-		if (is_string($description)) {
-			$command->description = $this->🤔($description);
+		if ($command instanceof 🗂️) {
+			$command->description = $this->🤔($command->description);
 		}
 	}
 

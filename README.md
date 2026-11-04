@@ -1,10 +1,15 @@
 # EmojiAttack
 
-EmojiAttack adds a random emoji suffix to selected text sent to players on an Axolotl-PM server.
+Add configurable emoji suffixes to Axolotl-PM text and command descriptions
 
-[![Build and validate EmojiAttack plugin](https://github.com/NhanAZ-Plugins/EmojiAttack/actions/workflows/build.yml/badge.svg)](https://github.com/NhanAZ-Plugins/EmojiAttack/actions/workflows/build.yml)
+[![CI](https://github.com/NhanAZ-Plugins/EmojiAttack/actions/workflows/build.yml/badge.svg)](https://github.com/NhanAZ-Plugins/EmojiAttack/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/NhanAZ-Plugins/EmojiAttack)](https://github.com/NhanAZ-Plugins/EmojiAttack/releases/latest)
+[![License](https://img.shields.io/github/license/NhanAZ-Plugins/EmojiAttack)](https://github.com/NhanAZ-Plugins/EmojiAttack/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/986553214889517088?label=Discord&logo=discord&logoColor=white&color=5865F2)](https://discord.gg/j2X83ujT6c)
 
-![Example of EmojiAttack text in game](https://user-images.githubusercontent.com/60387689/175365250-802e953a-022c-44e3-a00e-784af9782b94.png)
+## Overview
+
+This plugin targets the PocketMine-MP and Axolotl-PM API 5 ecosystem and is maintained under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins).
 
 ## Features
 

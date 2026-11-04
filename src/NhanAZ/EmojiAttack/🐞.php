@@ -88,7 +88,7 @@ class 🐞 extends 🏠 implements 👂 {
 		$publicFields = get_object_vars($command);
 		$description = $publicFields['description'] ?? null;
 		if (is_string($description)) {
-			(new \ReflectionProperty($command, 'description'))->setValue($command, $this->🤔($description));
+			$command->description = $this->🤔($description);
 		}
 	}
 

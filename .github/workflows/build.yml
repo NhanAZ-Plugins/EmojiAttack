@@ -46,7 +46,7 @@ jobs:
 
   build:
     needs: test
-    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@v2 # v2
+    uses: NhanAZ/DevTools/.github/workflows/build-plugin.yml@v2.1.1
     with:
       axolotl-ref: e881fc1bc1c401545baf6bd1f824e41ff3f57bd1
       phpstan: max

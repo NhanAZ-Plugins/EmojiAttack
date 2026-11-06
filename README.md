@@ -38,7 +38,7 @@ Set `randomColor` to `true` to choose a color from `arrColor` for each suffix. E
 
 ## Build and development
 
-The [GitHub Actions workflow](.github/workflows/build.yml) tests packet transformations against pinned Axolotl-PM source revisions. It uses [DevTools](https://github.com/NhanAZ/DevTools) to run PHPStan at maximum level, build the plugin PHAR and validate the artifact before upload. DevTools and server sources are pinned to verified commits in the workflow.
+The [GitHub Actions workflow](.github/workflows/build.yml) tests packet transformations against pinned Axolotl-PM source revisions. It uses [DevTools](https://github.com/AxolotlBucketLabs/DevTools) to run PHPStan at maximum level, build the plugin PHAR and validate the artifact before upload. DevTools and server sources are pinned to verified commits in the workflow.
 
 With an installed Axolotl-PM source checkout, run `php tests/packet-transform.php <server-source-path>` to test text, translation, popup, command description and empty-resource handling. A packet test without a connected Bedrock client does not confirm how the text appears in game.
 
